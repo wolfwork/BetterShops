@@ -76,7 +76,7 @@ public class BuyingAndSelling {
             while (enumEntries.hasMoreElements()) {
                 java.util.jar.JarEntry file = (java.util.jar.JarEntry) enumEntries.nextElement();
                 if (file.getName().equals("Language/BuyingAndSelling.yml")) {
-                    java.io.File f = new java.io.File(Core.getCore().getDataFolder() + java.io.File.separator + file.getName());
+                    File f = new File(Core.getCore().getDataFolder() + File.separator + file.getName());
                     try {
                         BuyingAndSelling.file.createNewFile();
                     } catch (IOException e) {
@@ -138,7 +138,7 @@ public class BuyingAndSelling {
                             while (enumEntries.hasMoreElements()) {
                                 java.util.jar.JarEntry file = (java.util.jar.JarEntry) enumEntries.nextElement();
                                 if (file.getName().equals("Language/BuyingAndSelling.yml")) {
-                                    java.io.File f = new java.io.File(Core.getCore().getDataFolder() + java.io.File.separator + file.getName());
+                                    File f = new File(Core.getCore().getDataFolder() + File.separator + file.getName());
                                     try {
                                         BuyingAndSelling.file.createNewFile();
                                     } catch (IOException e) {
@@ -192,7 +192,7 @@ public class BuyingAndSelling {
                     while (enumEntries.hasMoreElements()) {
                         java.util.jar.JarEntry file = (java.util.jar.JarEntry) enumEntries.nextElement();
                         if (file.getName().equals("Language/BuyingAndSelling.yml")) {
-                            java.io.File f = new java.io.File(Core.getCore().getDataFolder() + java.io.File.separator + file.getName());
+                            File f = new File(Core.getCore().getDataFolder() + File.separator + file.getName());
                             try {
                                 BuyingAndSelling.file.createNewFile();
                             } catch (IOException e) {
@@ -227,7 +227,7 @@ public class BuyingAndSelling {
                         }
                     }
                 }
-                file = new File(Bukkit.getPluginManager().getPlugin("BetterShops").getDataFolder(), "Messages.yml");
+                file = new File(Bukkit.getPluginManager().getPlugin("BetterShops").getDataFolder(), "Language/BuyingAndSelling.yml");
 
                 config = YamlConfiguration.loadConfiguration(file);
                 for (String s : hash.keySet()) {

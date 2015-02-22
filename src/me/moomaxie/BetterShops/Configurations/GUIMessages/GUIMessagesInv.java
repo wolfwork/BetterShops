@@ -23,7 +23,7 @@ public class GUIMessagesInv {
         Inventory inv = Bukkit.createInventory(p, 54, "§7[BetterShops] §dLanguages");
 
         //Glass
-        org.bukkit.inventory.ItemStack glass = new org.bukkit.inventory.ItemStack(Material.STAINED_GLASS_PANE,1,(byte) 7);
+        ItemStack glass = new ItemStack(Material.STAINED_GLASS_PANE,1,(byte) 7);
         ItemMeta glassMeta = glass.getItemMeta();
         glassMeta.setDisplayName(" ");
         glass.setItemMeta(glassMeta);
@@ -80,6 +80,11 @@ public class GUIMessagesInv {
         historyMeta.setDisplayName("§eShop History Messages");
         history.setItemMeta(historyMeta);
 
+        ItemStack chat = new ItemStack(Material.SNOW_BALL);
+        ItemMeta chatMeta = chat.getItemMeta();
+        chatMeta.setDisplayName("§eChat Messages");
+        chat.setItemMeta(chatMeta);
+
         inv.setItem(10,main);
         inv.setItem(11,checkout);
         inv.setItem(12,BAS);
@@ -88,6 +93,7 @@ public class GUIMessagesInv {
         inv.setItem(15,shopKeeper);
         inv.setItem(16,shopSettings);
         inv.setItem(19,history);
+        inv.setItem(20, chat);
 
         p.openInventory(inv);
     }

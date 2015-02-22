@@ -73,7 +73,7 @@ public class MainGUI {
             while (enumEntries.hasMoreElements()) {
                 java.util.jar.JarEntry file = (java.util.jar.JarEntry) enumEntries.nextElement();
                 if (file.getName().equals("Language/MainGUI.yml")) {
-                    java.io.File f = new java.io.File(Core.getCore().getDataFolder() + java.io.File.separator + file.getName());
+                    File f = new File(Core.getCore().getDataFolder() + File.separator + file.getName());
                     try {
                         MainGUI.file.createNewFile();
                     } catch (IOException e) {
@@ -112,9 +112,10 @@ public class MainGUI {
             if (config != null) {
                 HashMap<String, Object> hash = new HashMap<>();
 
-                for (String s : config.getKeys(true)) {
-                    if (!s.contains("Version"))
-                    hash.put(s, config.get(s));
+                for (String s : config.getKeys(false)) {
+                    if (!s.contains("Version")) {
+                        hash.put(s, config.get(s));
+                    }
                 }
 
                 if (config.isString("Version")) {
@@ -135,7 +136,7 @@ public class MainGUI {
                             while (enumEntries.hasMoreElements()) {
                                 java.util.jar.JarEntry file = (java.util.jar.JarEntry) enumEntries.nextElement();
                                 if (file.getName().equals("Language/MainGUI.yml")) {
-                                    java.io.File f = new java.io.File(Core.getCore().getDataFolder() + java.io.File.separator + file.getName());
+                                    File f = new File(Core.getCore().getDataFolder() + File.separator + file.getName());
                                     try {
                                         MainGUI.file.createNewFile();
                                     } catch (IOException e) {
@@ -189,7 +190,7 @@ public class MainGUI {
                     while (enumEntries.hasMoreElements()) {
                         java.util.jar.JarEntry file = (java.util.jar.JarEntry) enumEntries.nextElement();
                         if (file.getName().equals("Language/MainGUI.yml")) {
-                            java.io.File f = new java.io.File(Core.getCore().getDataFolder() + java.io.File.separator + file.getName());
+                            File f = new File(Core.getCore().getDataFolder() + File.separator + file.getName());
                             try {
                                 MainGUI.file.createNewFile();
                             } catch (IOException e) {
@@ -224,7 +225,7 @@ public class MainGUI {
                         }
                     }
                 }
-                file = new File(Bukkit.getPluginManager().getPlugin("BetterShops").getDataFolder(), "Messages.yml");
+                file = new File(Bukkit.getPluginManager().getPlugin("BetterShops").getDataFolder(), "Language/MainGUI.yml");
 
                 config = YamlConfiguration.loadConfiguration(file);
                 for (String s : hash.keySet()) {

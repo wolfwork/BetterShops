@@ -41,7 +41,6 @@ public class OpenNPCShop implements Listener {
                             Player p = e.getPlayer();
 
                             if (npc.getShop().getOwner() != null) {
-
                                 if (npc.getShop().getOwner().getUniqueId().equals(p.getUniqueId()) && !npc.getShop().isServerShop() || npc.getShop().getOwner().getUniqueId().toString().equals(p.getUniqueId().toString()) && !npc.getShop().isServerShop() || npc.getShop().getOwner() != null && npc.getShop().getOwner().getUniqueId().equals(p.getUniqueId()) && !npc.getShop().isServerShop()) {
                                     e.setCancelled(true);
                                     if (npc.getShop().getShopContents(false).size() >= npc.getShop().getShopContents(true).size()) {
@@ -80,10 +79,10 @@ public class OpenNPCShop implements Listener {
                                                 OpenShop.openShopItems(null, p, npc.getShop(), 1);
                                             }
                                         }
-                                        p.sendMessage(Messages.getPrefix() + Messages.getOpenShopMessage());
+                                        p.sendMessage(Messages.getString("Prefix") + Messages.getString("OpenShop"));
                                     } else {
                                         e.setCancelled(true);
-                                        p.sendMessage(Messages.getPrefix() + "Shop Is §cClosed");
+                                        p.sendMessage(Messages.getString("Prefix") + Messages.getString("ShopClosed"));
                                     }
                                 }
 

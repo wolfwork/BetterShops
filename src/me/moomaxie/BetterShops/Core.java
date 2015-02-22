@@ -66,11 +66,7 @@ public class Core extends JavaPlugin {
     //TODO: Manager Admins - maybe
     //TODO: Villager/skeleton/sizes/ types - 1.8 animals - 1.6.0
     //TODO: Add more types of shops: Holographic, Sign, Floating Item - 1.6.0
-    //TODO: Shop connections - maybe
     //TODO: Claiming un-owned shops - maybe
-    //TODO: Change Chat messages in-game - 1.6.0
-
-    //Change WG message when changing versions
 
     private static Core instance;
     public static Metrics metrics;
@@ -81,7 +77,7 @@ public class Core extends JavaPlugin {
     private static boolean wg = false;
 
     //Beta versions
-    private static boolean beta = true;
+    private static boolean beta = false;
 
 
     @Override
@@ -181,7 +177,7 @@ public class Core extends JavaPlugin {
                     while (enumEntries.hasMoreElements()) {
                         java.util.jar.JarEntry file = (java.util.jar.JarEntry) enumEntries.nextElement();
                         if (file.getName().equals("Shops")) {
-                            java.io.File f = new java.io.File(this.getDataFolder() + java.io.File.separator + file.getName());
+                            File f = new File(this.getDataFolder() + File.separator + file.getName());
                             if (file.isDirectory()) { // if its a directory, create it
                                 f.mkdir();
                                 continue;
@@ -263,11 +259,11 @@ public class Core extends JavaPlugin {
 
                 //Register WorldGuard
                 if (getWorldGuard() != null) {
-                    if (!getWorldGuard().getDescription().getVersion().startsWith("\"6") && !getWorldGuard().getDescription().getVersion().startsWith("6")) {
+                    if (getWorldGuard().getDescription().getVersion().startsWith("\"6") || getWorldGuard().getDescription().getVersion().startsWith("6")) {
                         wg = true;
                         Bukkit.getConsoleSender().sendMessage("§bBetterShops§7 - §aLoading support for §eWorldGuard");
                     } else {
-                        Bukkit.getConsoleSender().sendMessage("§bBetterShops§7 - §eWorldGuard §ais detected, but the version §cmust be 5.9 or Lower§a. Current version is not supported.");
+                        Bukkit.getConsoleSender().sendMessage("§bBetterShops§7 - §eWorldGuard §ais detected, but the version §cmust be 6.0 or Higher§a. Current version is not supported.");
                         wg = false;
                     }
                 }
@@ -326,7 +322,7 @@ public class Core extends JavaPlugin {
 
     //Find Vault Economy Hook
     private boolean setupEconomy() {
-        RegisteredServiceProvider<Economy> economyProvider = getServer().getServicesManager().getRegistration(net.milkbowl.vault.economy.Economy.class);
+        RegisteredServiceProvider<Economy> economyProvider = getServer().getServicesManager().getRegistration(Economy.class);
         if (economyProvider != null) {
             economy = economyProvider.getProvider();
         }
@@ -375,21 +371,21 @@ public class Core extends JavaPlugin {
 
                     if (args[0].equalsIgnoreCase("info")) {
 
-                        p.sendMessage(Messages.getPrefix() + "You are running version: §e" + getDescription().getVersion());
+                        p.sendMessage(Messages.getString("Prefix") + "You are running version: §e" + getDescription().getVersion());
 
-                        p.sendMessage(Messages.getPrefix() + "Total Shops: §e" + ShopLimits.getAllShops().size());
-                        p.sendMessage(Messages.getPrefix() + "Total NPC Shops: §e" + NPCs.getNPCs().size());
+                        p.sendMessage(Messages.getString("Prefix") + "Total Shops: §e" + ShopLimits.getAllShops().size());
+                        p.sendMessage(Messages.getString("Prefix") + "Total NPC Shops: §e" + NPCs.getNPCs().size());
                     } else if (args[0].equalsIgnoreCase("config")) {
                         if (Permissions.hasConfigGUIPerm(p)) {
                             ConfigMenu.openConfigMenu(null, p);
                         } else {
-                            p.sendMessage(Messages.getPrefix() + Messages.getNoPermission());
+                            p.sendMessage(Messages.getString("Prefix") + Messages.getString("NoPermission"));
                         }
                     } else if (args[0].equalsIgnoreCase("language")) {
                         if (Permissions.hasLanguagePerm(p)) {
                             GUIMessagesInv.openGUIMessagesInv(p);
                         } else {
-                            p.sendMessage(Messages.getPrefix() + Messages.getNoPermission());
+                            p.sendMessage(Messages.getString("Prefix") + Messages.getString("NoPermission"));
                         }
 
                     } else {
@@ -424,13 +420,13 @@ public class Core extends JavaPlugin {
                                         OpenShop.openShopItems(null, p, shop, 1);
                                     }
                                 } else {
-                                    p.sendMessage(Messages.getPrefix() + "§cThis shop doesn't exist!");
+                                    p.sendMessage(Messages.getString("Prefix") + Messages.getString("FakeShop"));
                                 }
                             } else {
-                                p.sendMessage(Messages.getPrefix() + "§cThis shop doesn't exist!");
+                                p.sendMessage(Messages.getString("Prefix") + Messages.getString("FakeShop"));
                             }
                         } else {
-                            p.sendMessage(Messages.getPrefix() + Messages.getNoPermission());
+                            p.sendMessage(Messages.getString("Prefix") + Messages.getString("NoPermission"));
                         }
                     } else {
                         p.sendMessage("§d<-Better Shops Help->");
@@ -461,7 +457,7 @@ public class Core extends JavaPlugin {
                 Player p = (Player) sender;
 
                 if (Config.usePerms() && !Permissions.hasRemoveCommandPerm(p)) {
-                    p.sendMessage(Messages.getPrefix() + Messages.getNoPermission());
+                    p.sendMessage(Messages.getString("Prefix") + Messages.getString("NoPermission"));
                     return true;
                 }
 
@@ -527,7 +523,7 @@ public class Core extends JavaPlugin {
                                                 }
                                             }
 
-                                            p.sendMessage(Messages.getPrefix() + Messages.getRemoveShop());
+                                            p.sendMessage(Messages.getString("Prefix") + Messages.getString("DeleteShop"));
 
                                             ShopDeleteEvent e = new ShopDeleteEvent(shop);
 
@@ -580,16 +576,16 @@ public class Core extends JavaPlugin {
 
 
                                                 Core.getTitleManager().setTimes(p, 20, 40, 20);
-                                                Core.getTitleManager().sendTitle(p, Messages.getRemoveShop());
+                                                Core.getTitleManager().sendTitle(p, Messages.getString("DeleteShop"));
 
 
                                             }
                                         } else {
-                                            p.sendMessage(Messages.getPrefix() + "§4ERROR: §cShop is non-existant, please tell a server operator of this problem");
+                                            p.sendMessage(Messages.getString("Prefix") + "§4ERROR: §cShop is non-existant, please tell a server operator of this problem");
                                         }
 
                                     } else {
-                                        p.sendMessage(Messages.getPrefix() + "§4ERROR: §cCannot find location of shop, please tell a server operator of this problem");
+                                        p.sendMessage(Messages.getString("Prefix") + "§4ERROR: §cCannot find location of shop, please tell a server operator of this problem");
                                     }
                                 } else {
                                     File file = new File(this.getDataFolder(), "Shops/" + shop.getOwner().getUniqueId() + ".yml");
@@ -626,7 +622,7 @@ public class Core extends JavaPlugin {
 
                                                     }
 
-                                                    p.sendMessage(Messages.getPrefix() + Messages.getRemoveShop());
+                                                    p.sendMessage(Messages.getString("Prefix") + Messages.getString("DeleteShop"));
                                                     config.set(name, null);
                                                     try {
                                                         config.save(file);
@@ -640,7 +636,7 @@ public class Core extends JavaPlugin {
                                                     if (Core.isAboveEight() && Config.useTitles()) {
 
                                                         Core.getTitleManager().setTimes(p, 20, 40, 20);
-                                                        Core.getTitleManager().sendTitle(p, Messages.getRemoveShop());
+                                                        Core.getTitleManager().sendTitle(p, Messages.getString("DeleteShop"));
 
 
                                                     }
@@ -671,7 +667,7 @@ public class Core extends JavaPlugin {
                                             }
 
                                         }
-                                        p.sendMessage(Messages.getPrefix() + Messages.getRemoveShop());
+                                        p.sendMessage(Messages.getString("Prefix") + Messages.getString("DeleteShop"));
                                         config.set(name, null);
                                         try {
                                             config.save(file);
@@ -682,7 +678,7 @@ public class Core extends JavaPlugin {
                                         if (Core.isAboveEight() && Config.useTitles()) {
 
                                             Core.getTitleManager().setTimes(p, 20, 40, 20);
-                                            Core.getTitleManager().sendTitle(p, Messages.getRemoveShop());
+                                            Core.getTitleManager().sendTitle(p, Messages.getString("DeleteShop"));
 
 
                                         }
@@ -690,20 +686,20 @@ public class Core extends JavaPlugin {
                                     }
                                 }
                             } else {
-                                p.sendMessage(Messages.getPrefix() + Messages.getDenyRemoveShop());
+                                p.sendMessage(Messages.getString("Prefix") + Messages.getString("DenyDeleteShop"));
                             }
                         } else {
-                            p.sendMessage(Messages.getPrefix() + "§cThis shop doesn't exist!");
+                            p.sendMessage(Messages.getString("Prefix") + Messages.getString("FakeShop"));
                         }
                     } else {
-                        p.sendMessage(Messages.getPrefix() + "§cThis shop doesn't exist!");
+                        p.sendMessage(Messages.getString("Prefix") + Messages.getString("FakeShop"));
                     }
 
                 } else {
-                    p.sendMessage(Messages.getPrefix() + "§cUsage: §d/sremove <ShopName>");
+                    p.sendMessage(Messages.getString("Prefix") + "§cUsage: §d/sremove <ShopName>");
                 }
             } else {
-                sender.sendMessage(Messages.getPrefix() + "Only Players Can Perform This Command!");
+                sender.sendMessage(Messages.getString("Prefix") + "Only Players Can Perform This Command!");
             }
             return true;
         }
@@ -732,7 +728,7 @@ public class Core extends JavaPlugin {
     private Plugin getVault() {
         Plugin plugin = getServer().getPluginManager().getPlugin("Vault");
 
-        // WorldGuard may not be loaded
+        // Vault may not be loaded
         if (plugin == null) {
             return null; // Maybe you want throw an exception instead
         }
@@ -769,7 +765,7 @@ public class Core extends JavaPlugin {
     public Plugin getVaultPlugin() {
         Plugin plugin = getServer().getPluginManager().getPlugin("Vault");
 
-        // WorldGuard may not be loaded
+        // Vault may not be loaded
         if (plugin == null) {
             return null; // Maybe you want throw an exception instead
         }

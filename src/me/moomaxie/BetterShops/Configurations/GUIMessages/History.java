@@ -71,7 +71,7 @@ public class History {
             while (enumEntries.hasMoreElements()) {
                 java.util.jar.JarEntry file = (java.util.jar.JarEntry) enumEntries.nextElement();
                 if (file.getName().equals("Language/History.yml")) {
-                    java.io.File f = new java.io.File(Core.getCore().getDataFolder() + java.io.File.separator + file.getName());
+                    File f = new File(Core.getCore().getDataFolder() + File.separator + file.getName());
                     try {
                         History.file.createNewFile();
                     } catch (IOException e) {
@@ -133,7 +133,7 @@ public class History {
                             while (enumEntries.hasMoreElements()) {
                                 java.util.jar.JarEntry file = (java.util.jar.JarEntry) enumEntries.nextElement();
                                 if (file.getName().equals("Language/History.yml")) {
-                                    java.io.File f = new java.io.File(Core.getCore().getDataFolder() + java.io.File.separator + file.getName());
+                                    File f = new File(Core.getCore().getDataFolder() + File.separator + file.getName());
                                     try {
                                         History.file.createNewFile();
                                     } catch (IOException e) {
@@ -187,7 +187,7 @@ public class History {
                     while (enumEntries.hasMoreElements()) {
                         java.util.jar.JarEntry file = (java.util.jar.JarEntry) enumEntries.nextElement();
                         if (file.getName().equals("Language/History.yml")) {
-                            java.io.File f = new java.io.File(Core.getCore().getDataFolder() + java.io.File.separator + file.getName());
+                            File f = new File(Core.getCore().getDataFolder() + File.separator + file.getName());
                             try {
                                 History.file.createNewFile();
                             } catch (IOException e) {
@@ -222,7 +222,7 @@ public class History {
                         }
                     }
                 }
-                file = new File(Bukkit.getPluginManager().getPlugin("BetterShops").getDataFolder(), "Messages.yml");
+                file = new File(Bukkit.getPluginManager().getPlugin("BetterShops").getDataFolder(), "Language/History.yml");
 
                 config = YamlConfiguration.loadConfiguration(file);
                 for (String s : hash.keySet()) {

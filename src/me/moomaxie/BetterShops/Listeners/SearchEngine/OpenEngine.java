@@ -46,10 +46,10 @@ public class OpenEngine implements Listener {
 
                     if (e.isLeftClick()) {
 
-                        if (e.getCurrentItem().getItemMeta().getLore() != null && e.getCurrentItem().getItemMeta().getLore().contains("§e§lLeft Click §7to open §aSearch Options")) {
+                        if (e.getCurrentItem().getItemMeta().getLore() != null && e.getCurrentItem().getItemMeta().getLore().contains(MainGUI.getString("SearchOptions"))) {
                             boolean sell = false;
 
-                            if (e.getCurrentItem().getItemMeta().getDisplayName() != null && e.getCurrentItem().getItemMeta().getDisplayName().equals("§e§lSelling")) {
+                            if (e.getCurrentItem().getItemMeta().getDisplayName() != null && e.getCurrentItem().getItemMeta().getDisplayName().equals(MainGUI.getString("Selling"))) {
                                 sell = true;
                             }
 
@@ -164,7 +164,7 @@ public class OpenEngine implements Listener {
                                     }, 1L);
 
                                 } else {
-                                    p.sendMessage(Messages.getPrefix() + Messages.getImproperSearch());
+                                    p.sendMessage(Messages.getString("Prefix") + Messages.getString("ImproperSearch"));
                                 }
                             }
                         }
@@ -219,7 +219,7 @@ public class OpenEngine implements Listener {
                                     }, 1L);
 
                                 } else {
-                                    p.sendMessage(Messages.getPrefix() + Messages.getImproperSearch());
+                                    p.sendMessage(Messages.getString("Prefix") + Messages.getString("ImproperSearch"));
                                 }
                             }
                         }
@@ -275,7 +275,7 @@ public class OpenEngine implements Listener {
                                     }, 1L);
 
                                 } else {
-                                    p.sendMessage(Messages.getPrefix() + Messages.getImproperSearch());
+                                    p.sendMessage(Messages.getString("Prefix") + Messages.getString("ImproperSearch"));
                                 }
                             }
                         }
@@ -331,7 +331,7 @@ public class OpenEngine implements Listener {
                                     }, 1L);
 
                                 } else {
-                                    p.sendMessage(Messages.getPrefix() + Messages.getImproperSearch());
+                                    p.sendMessage(Messages.getString("Prefix") + Messages.getString("ImproperSearch"));
                                 }
                             }
                         }

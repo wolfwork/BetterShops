@@ -72,7 +72,7 @@ public class Checkout {
             while (enumEntries.hasMoreElements()) {
                 java.util.jar.JarEntry file = (java.util.jar.JarEntry) enumEntries.nextElement();
                 if (file.getName().equals("Language/Checkout.yml")) {
-                    java.io.File f = new java.io.File(Core.getCore().getDataFolder() + java.io.File.separator + file.getName());
+                    File f = new File(Core.getCore().getDataFolder() + File.separator + file.getName());
                     try {
                         Checkout.file.createNewFile();
                     } catch (IOException e) {
@@ -134,7 +134,7 @@ public class Checkout {
                             while (enumEntries.hasMoreElements()) {
                                 java.util.jar.JarEntry file = (java.util.jar.JarEntry) enumEntries.nextElement();
                                 if (file.getName().equals("Language/Checkout.yml")) {
-                                    java.io.File f = new java.io.File(Core.getCore().getDataFolder() + java.io.File.separator + file.getName());
+                                    File f = new File(Core.getCore().getDataFolder() + File.separator + file.getName());
                                     try {
                                         Checkout.file.createNewFile();
                                     } catch (IOException e) {
@@ -188,7 +188,7 @@ public class Checkout {
                     while (enumEntries.hasMoreElements()) {
                         java.util.jar.JarEntry file = (java.util.jar.JarEntry) enumEntries.nextElement();
                         if (file.getName().equals("Language/Checkout.yml")) {
-                            java.io.File f = new java.io.File(Core.getCore().getDataFolder() + java.io.File.separator + file.getName());
+                            File f = new File(Core.getCore().getDataFolder() + File.separator + file.getName());
                             try {
                                 Checkout.file.createNewFile();
                             } catch (IOException e) {
@@ -223,7 +223,7 @@ public class Checkout {
                         }
                     }
                 }
-                file = new File(Bukkit.getPluginManager().getPlugin("BetterShops").getDataFolder(), "Messages.yml");
+                file = new File(Bukkit.getPluginManager().getPlugin("BetterShops").getDataFolder(), "Language/Checkout.yml");
 
                 config = YamlConfiguration.loadConfiguration(file);
                 for (String s : hash.keySet()) {
