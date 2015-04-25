@@ -1,11 +1,11 @@
 package BetterShops.Dev.API.Events;
 
 import me.moomaxie.BetterShops.Shops.Shop;
+import me.moomaxie.BetterShops.Shops.ShopItem;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
-import org.bukkit.inventory.ItemStack;
 
 /**
  * ***********************************************************************
@@ -20,20 +20,24 @@ public class ShopSellItemEvent extends Event {
 
     private static final HandlerList handlers = new HandlerList();
     private Shop shop;
-    private ItemStack item;
+    private ShopItem item;
+    private OfflinePlayer seller;
 
-    public ShopSellItemEvent(ItemStack item, Shop shop) {
+    public ShopSellItemEvent(ShopItem item, Shop shop, OfflinePlayer seller) {
         this.shop = shop;
         this.item = item;
+        this.seller = seller;
     }
 
     public Shop getShop(){
         return shop;
     }
 
-    public ItemStack getItem(){
+    public ShopItem getItem(){
         return item;
     }
+
+    public OfflinePlayer getCustomer(){return seller;}
 
     public OfflinePlayer getOwner(){
         return shop.getOwner();

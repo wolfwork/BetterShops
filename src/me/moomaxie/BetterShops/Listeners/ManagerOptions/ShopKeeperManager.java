@@ -4,7 +4,7 @@ import me.moomaxie.BetterShops.Configurations.AnvilGUI;
 import me.moomaxie.BetterShops.Configurations.Config;
 import me.moomaxie.BetterShops.Configurations.GUIMessages.MainGUI;
 import me.moomaxie.BetterShops.Configurations.Messages;
-import me.moomaxie.BetterShops.Configurations.ShopLimits;
+import me.moomaxie.BetterShops.Configurations.ShopManager;
 import me.moomaxie.BetterShops.Core;
 import me.moomaxie.BetterShops.Listeners.BuyerOptions.OpenShop;
 import me.moomaxie.BetterShops.Listeners.Misc.ChatMessages;
@@ -28,9 +28,9 @@ import java.util.Arrays;
 
 /**
  * ***********************************************************************
- * Copyright me.moomaxie (c) 2014. All Rights Reserved.
+ * Copyright Max Hubbard (c) 2014. All Rights Reserved.
  * Any code contained within this document, and any associated documents with similar branding
- * are the sole property of me.moomaxie. Distribution, reproduction, taking snippets, or
+ * are the sole property of Max. Distribution, reproduction, taking snippets, or
  * claiming any contents as your own will break the terms of the license, and void any
  * agreements with you, the third party.
  * ************************************************************************
@@ -40,21 +40,25 @@ public class ShopKeeperManager implements Listener {
     @EventHandler
     public void onSettings(InventoryClickEvent e) {
         Player p = (Player) e.getWhoClicked();
-        if (e.getInventory().getName().contains("§7[Shop]")) {
+        if (e.getInventory().getName().contains(MainGUI.getString("ShopHeader"))) {
             e.setCancelled(true);
 
             if (e.getInventory().getType() == InventoryType.CHEST) {
                 if (e.getCurrentItem() != null && e.getCurrentItem().getType() != Material.AIR) {
 
                     String name = e.getInventory().getName();
-                    name = name.substring(11);
+                    name = name.substring(MainGUI.getString("ShopHeader").length());
 
-                    Shop shop = ShopLimits.fromString(p, name);
+                    Shop shop = ShopManager.fromString(p, name);
 
-                    if (shop.getOwner().getUniqueId().equals(p.getUniqueId())) {
-                        if (e.getCurrentItem().getItemMeta().getDisplayName() != null && e.getCurrentItem().getItemMeta().getDisplayName().equals(MainGUI.getString("ShopKeepersDisplayName"))) {
-                            if (e.getAction() == InventoryAction.PICKUP_ALL) {
-                                openKeeperManager(p, shop);
+                    if (shop.getOwner() != null) {
+
+                        if (shop.getOwner().getUniqueId().equals(p.getUniqueId())) {
+
+                            if (e.getCurrentItem().getItemMeta().getDisplayName() != null && e.getCurrentItem().getItemMeta().getDisplayName().equals(MainGUI.getString("ShopKeepersDisplayName"))) {
+                                if (e.getAction() == InventoryAction.PICKUP_ALL) {
+                                    openKeeperManager(p, shop);
+                                }
                             }
                         }
                     }
@@ -64,7 +68,7 @@ public class ShopKeeperManager implements Listener {
     }
 
     public static void openKeeperManager(Player p, Shop shop) {
-        Inventory inv = Bukkit.createInventory(p, 54, "§7[Shop] §a" + shop.getName());
+        Inventory inv = Bukkit.createInventory(p, 54, MainGUI.getString("ShopHeader") + shop.getName());
 
         ItemStack item = new ItemStack(Material.STAINED_GLASS_PANE, 1, (byte) 7);
         ItemMeta m = item.getItemMeta();
@@ -124,15 +128,15 @@ public class ShopKeeperManager implements Listener {
     @EventHandler
     public void onSettingsClick(final InventoryClickEvent e) {
         Player p = (Player) e.getWhoClicked();
-        if (e.getInventory().getName().contains("§7[Shop]")) {
+        if (e.getInventory().getName().contains(MainGUI.getString("ShopHeader"))) {
             e.setCancelled(true);
 
             if (e.getInventory().getType() == InventoryType.CHEST) {
                 if (e.getCurrentItem() != null && e.getCurrentItem().getType() != Material.AIR) {
                     String name = e.getInventory().getName();
-                    name = name.substring(11);
+                    name = name.substring(MainGUI.getString("ShopHeader").length());
 
-                    final Shop shop = ShopLimits.fromString(p, name);
+                    final Shop shop = ShopManager.fromString(p, name);
 
                     if (e.getCurrentItem().getItemMeta().getDisplayName() != null && e.getCurrentItem().getItemMeta().getDisplayName().equals(MainGUI.getString("BackArrow"))) {
                         if (shop.getOwner().getUniqueId().equals(p.getUniqueId())) {
@@ -165,7 +169,7 @@ public class ShopKeeperManager implements Listener {
                                                             ((Player) e.getWhoClicked()).sendMessage(Messages.getString("Prefix") + Messages.getString("AddedKeeper"));
                                                             openKeeperManager((Player) e.getWhoClicked(), shop);
                                                         } else {
-                                                            ((Player) e.getWhoClicked()).sendMessage(Messages.getString("Prefix") + "§cAlready a shop keeper");
+                                                            ((Player) e.getWhoClicked()).sendMessage(Messages.getString("Prefix") + Messages.getString("AlreadyAKeeper"));
                                                             openKeeperManager((Player) e.getWhoClicked(), shop);
                                                         }
                                                     } else {

@@ -6,7 +6,7 @@
 #     Lines starting with # are comments and will be ignored.
 #
 
-Version: 1.5.3
+Version: 1.6.1
 
 ####  General  ####
 
@@ -45,6 +45,9 @@ DeleteByBreak: True
 # Allows players to use shop when closed if they had opened it while the shop was open (True/False)
 UseOnClose: False
 
+# Enables Transactions to be visible to the shop owners (May cause startup lag if enabled)
+UseTransactions: True
+
 ####  Shop Creation  ####
 
 # Enable Shop Creation Limits (True/False)
@@ -77,6 +80,7 @@ NPC:
   Magma Cube: true
   Mushroom Cow: true
   Ocelot: true
+  Pig: true
   Pig Zombie: true
   Rabbit: true
   Sheep: true
@@ -96,3 +100,14 @@ EnableAllowShopsFlag: False
 
 # Override a region to allow NPCs to spawn (only if Mob-Spawning is disabled in the region. If False, NPCs will not spawn in these regions) (True/False)
 NPCOverride: True
+
+####  Holographic Shops  ####
+
+# Enable Holographic shops
+HoloShops: True
+
+####  Live Economy  ####
+
+# Enables the ability to use Live Economy
+UseLiveEco: True
+

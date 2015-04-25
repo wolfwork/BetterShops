@@ -1,5 +1,6 @@
 package me.moomaxie.BetterShops.Configurations.Permissions;
 
+import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.EntityType;
 
@@ -25,13 +26,26 @@ public class Permissions {
     // bettershops.shop.NPC
     // bettershops.shop.creationcost
     // bettershops.shop.break
+    // bettershops.shop.hologram
+    // bettershops.shop.liveeco
+    // bettershops.shop.arrange
+    // bettershops.shop.blacklist
 
+    // bettershops.command.update
     // bettershops.command.config
     // bettershops.command.language
     // bettershops.command.open
+    // bettershops.command.list
+    // bettershops.command.blacklist
 
     // bettershops.npc.*
     // bettershops.npc.TYPE
+
+    // bettershops.buy.*
+    // bettershops.buy.<Material>
+
+    // bettershops.sell.*
+    // bettershops.sell.<Material>
 
     public static boolean hasCreatePerm(OfflinePlayer p){
         return p.isOp() || p.getPlayer().hasPermission("bettershops.shop.create") || p.getPlayer().hasPermission("bettershops.shop.*");
@@ -65,20 +79,28 @@ public class Permissions {
         return p.isOp() || p.getPlayer().hasPermission("bettershops.shop.creationcost") || p.getPlayer().hasPermission("bettershops.shop.*");
     }
 
+    public static boolean hasUpdatePerm(OfflinePlayer p){
+        return p.isOp() || p.getPlayer().hasPermission("bettershops.command.update") || p.getPlayer().hasPermission("bettershops.command.*");
+    }
+
     public static boolean hasConfigGUIPerm(OfflinePlayer p){
-        return p.isOp() || p.getPlayer().hasPermission("bettershops.command.config") || p.getPlayer().hasPermission("bettershops.shop.*");
+        return p.isOp() || p.getPlayer().hasPermission("bettershops.command.config") || p.getPlayer().hasPermission("bettershops.command.*");
     }
 
     public static boolean hasLanguagePerm(OfflinePlayer p){
-        return p.isOp() || p.getPlayer().hasPermission("bettershops.command.language") || p.getPlayer().hasPermission("bettershops.shop.*");
+        return p.isOp() || p.getPlayer().hasPermission("bettershops.command.language") || p.getPlayer().hasPermission("bettershops.command.*");
     }
 
     public static boolean hasOpenCommandPerm(OfflinePlayer p){
-        return p.isOp() || p.getPlayer().hasPermission("bettershops.command.open") || p.getPlayer().hasPermission("bettershops.shop.*");
+        return p.isOp() || p.getPlayer().hasPermission("bettershops.command.open") || p.getPlayer().hasPermission("bettershops.command.*");
+    }
+
+    public static boolean hasListPerm(OfflinePlayer p){
+        return p.isOp() || p.getPlayer().hasPermission("bettershops.command.list") || p.getPlayer().hasPermission("bettershops.command.*");
     }
 
     public static boolean hasRemoveCommandPerm(OfflinePlayer p){
-        return p.isOp() || p.getPlayer().hasPermission("bettershops.command.remove") || p.getPlayer().hasPermission("bettershops.shop.*");
+        return p.isOp() || p.getPlayer().hasPermission("bettershops.command.remove") || p.getPlayer().hasPermission("bettershops.command.*");
     }
 
     public static boolean hasBreakPerm(OfflinePlayer p){
@@ -89,4 +111,31 @@ public class Permissions {
         return p.isOp() || p.getPlayer().hasPermission("bettershops.npc." + type.name().replaceAll("_","").toLowerCase()) || p.getPlayer().hasPermission("bettershops.npc.*") || p.getPlayer().hasPermission("bettershops.shop.*");
     }
 
+    public static boolean hasLiveEcoPerm(OfflinePlayer p){
+        return p.isOp() || p.getPlayer().hasPermission("bettershops.shop.liveeco") || p.getPlayer().hasPermission("bettershops.shop.*");
+    }
+
+    public static boolean hasHoloPerm(OfflinePlayer p){
+        return p.isOp() || p.getPlayer().hasPermission("bettershops.shop.hologram") || p.getPlayer().hasPermission("bettershops.shop.*");
+    }
+
+    public static boolean hasArrangePerm(OfflinePlayer p){
+        return p.isOp() || p.getPlayer().hasPermission("bettershops.shop.arrange") || p.getPlayer().hasPermission("bettershops.shop.*");
+    }
+
+    public static boolean hasBlacklistPerm(OfflinePlayer p){
+        return p.isOp() || p.getPlayer().hasPermission("bettershops.shop.blacklist") || p.getPlayer().hasPermission("bettershops.shop.*");
+    }
+
+    public static boolean hasBlacklistCommandPerm(OfflinePlayer p){
+        return p.isOp() || p.getPlayer().hasPermission("bettershops.command.blacklist") || p.getPlayer().hasPermission("bettershops.command.*");
+    }
+
+    public static boolean hasBuyItemPerm(OfflinePlayer p, Material m){
+        return p.isOp() || p.getPlayer().hasPermission("bettershops.buy." + m.name()) || p.getPlayer().hasPermission("bettershops.buy.*");
+    }
+
+    public static boolean hasSellItemPerm(OfflinePlayer p, Material m){
+        return p.isOp() || p.getPlayer().hasPermission("bettershops.sell." + m.name()) || p.getPlayer().hasPermission("bettershops.sell.*");
+    }
 }

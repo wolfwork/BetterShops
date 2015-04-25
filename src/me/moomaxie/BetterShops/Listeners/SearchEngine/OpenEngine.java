@@ -1,10 +1,11 @@
 package me.moomaxie.BetterShops.Listeners.SearchEngine;
 
 import me.moomaxie.BetterShops.Configurations.AnvilGUI;
+import me.moomaxie.BetterShops.Configurations.Config;
 import me.moomaxie.BetterShops.Configurations.GUIMessages.MainGUI;
 import me.moomaxie.BetterShops.Configurations.GUIMessages.SearchEngine;
 import me.moomaxie.BetterShops.Configurations.Messages;
-import me.moomaxie.BetterShops.Configurations.ShopLimits;
+import me.moomaxie.BetterShops.Configurations.ShopManager;
 import me.moomaxie.BetterShops.Core;
 import me.moomaxie.BetterShops.Shops.Shop;
 import org.bukkit.Bukkit;
@@ -34,22 +35,22 @@ public class OpenEngine implements Listener {
     @EventHandler
     public void onEngine(final InventoryClickEvent e) {
         final Player p = (Player) e.getWhoClicked();
-        if (e.getInventory().getName().contains("§7[Shop]")) {
+        if (e.getInventory().getName().contains(MainGUI.getString("ShopHeader"))) {
             e.setCancelled(true);
 
             if (e.getInventory().getType() == InventoryType.CHEST) {
                 if (e.getCurrentItem() != null && e.getCurrentItem().getType() != Material.AIR) {
                     String name = e.getInventory().getName();
-                    name = name.substring(11);
+                    name = name.substring(MainGUI.getString("ShopHeader").length());
 
-                    final Shop shop = ShopLimits.fromString(p, name);
+                    final Shop shop = ShopManager.fromString(p, name);
 
                     if (e.isLeftClick()) {
 
                         if (e.getCurrentItem().getItemMeta().getLore() != null && e.getCurrentItem().getItemMeta().getLore().contains(MainGUI.getString("SearchOptions"))) {
                             boolean sell = false;
 
-                            if (e.getCurrentItem().getItemMeta().getDisplayName() != null && e.getCurrentItem().getItemMeta().getDisplayName().equals(MainGUI.getString("Selling"))) {
+                            if (e.getCurrentItem().getItemMeta().getDisplayName() != null && e.getCurrentItem().getItemMeta().getDisplayName().equals(MainGUI.getString("Selling")) && Config.useSellingShop()) {
                                 sell = true;
                             }
 
@@ -65,7 +66,7 @@ public class OpenEngine implements Listener {
         boolean same = true;
         if (inv == null) {
             same = false;
-            inv = Bukkit.createInventory(p, 54, "§7[Shop]" + " §a" + shop.getName());
+            inv = Bukkit.createInventory(p, 54, MainGUI.getString("ShopHeader") + " §a" + shop.getName());
         } else {
             inv.clear();
         }
@@ -179,7 +180,7 @@ public class OpenEngine implements Listener {
 
         ItemStack it = new ItemStack(Material.PAPER);
         ItemMeta meta = it.getItemMeta();
-        meta.setDisplayName("Better Search");
+        meta.setDisplayName(SearchEngine.getString("BetterSearch"));
         it.setItemMeta(meta);
 
         gui.setSlot(AnvilGUI.AnvilSlot.INPUT_LEFT, it);
@@ -234,7 +235,7 @@ public class OpenEngine implements Listener {
 
         ItemStack it = new ItemStack(Material.PAPER);
         ItemMeta meta = it.getItemMeta();
-        meta.setDisplayName("Better Search");
+        meta.setDisplayName(SearchEngine.getString("BetterSearch"));
         it.setItemMeta(meta);
 
         gui.setSlot(AnvilGUI.AnvilSlot.INPUT_LEFT, it);
@@ -290,7 +291,7 @@ public class OpenEngine implements Listener {
 
         ItemStack it = new ItemStack(Material.PAPER);
         ItemMeta meta = it.getItemMeta();
-        meta.setDisplayName("Better Search");
+        meta.setDisplayName(SearchEngine.getString("BetterSearch"));
         it.setItemMeta(meta);
 
         gui.setSlot(AnvilGUI.AnvilSlot.INPUT_LEFT, it);
@@ -346,7 +347,7 @@ public class OpenEngine implements Listener {
 
         ItemStack it = new ItemStack(Material.PAPER);
         ItemMeta meta = it.getItemMeta();
-        meta.setDisplayName("Better Search");
+        meta.setDisplayName(SearchEngine.getString("BetterSearch"));
         it.setItemMeta(meta);
 
         gui.setSlot(AnvilGUI.AnvilSlot.INPUT_LEFT, it);

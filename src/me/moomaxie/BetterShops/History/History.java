@@ -1,10 +1,11 @@
 package me.moomaxie.BetterShops.History;
 
+import me.moomaxie.BetterShops.Configurations.Config;
 import me.moomaxie.BetterShops.Core;
 import me.moomaxie.BetterShops.Shops.Shop;
+import me.moomaxie.BetterShops.Shops.ShopItem;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.inventory.ItemStack;
 
 import java.io.File;
 import java.io.IOException;
@@ -26,15 +27,42 @@ public class History {
     private LinkedList<Transaction> transactions = new LinkedList<>();
     private LinkedList<Transaction> Selltransactions = new LinkedList<>();
 
+    private YamlConfiguration config = null;
+    private File file = null;
+
     private Shop shop;
 
-    public History(Shop shop){
+    public History(Shop shop) {
         this.shop = shop;
     }
 
-    public void addTransaction(OfflinePlayer p, Date date, ItemStack item, double price, int amount, boolean sell, boolean save){
+    public void addTransaction(OfflinePlayer p, Date date, ShopItem item, double price, int amount, boolean sell, boolean save) {
 
-        Transaction trans = new Transaction(p, date, item,price, amount,sell);
+        Transaction trans = new Transaction(p, date, item, price, amount, sell);
+
+        if (sell) {
+            Selltransactions.add(trans);
+        } else {
+            Buytransactions.add(trans);
+        }
+
+        transactions.add(trans);
+
+        if (save) {
+            if (Config.useTransactions()) {
+                shop.saveTransaction(trans, true);
+            }
+            saveTransactionToFile(trans);
+        }
+
+        if (transactions.size() > 36) {
+            shop.deleteFirstTransaction();
+        }
+    }
+
+    public void addTransaction(OfflinePlayer p, Date date, String item, double price, int amount, boolean sell, boolean save) {
+
+        Transaction trans = new Transaction(p, date, item, price, amount, sell);
 
         if (sell) {
             Selltransactions.add(trans);
@@ -46,31 +74,33 @@ public class History {
 
         if (save) {
             shop.saveTransaction(trans, true);
+            saveTransactionToFile(trans);
         }
-        saveTransactionToFile(trans);
     }
 
-    public LinkedList<Transaction> getBuyingTransactions(){
+    public LinkedList<Transaction> getBuyingTransactions() {
         return Buytransactions;
     }
-    public LinkedList<Transaction> getSellingTransactions(){
+
+    public LinkedList<Transaction> getSellingTransactions() {
         return Selltransactions;
     }
-    public LinkedList<Transaction> getAllTransactions(){
+
+    public LinkedList<Transaction> getAllTransactions() {
         return transactions;
     }
 
-    public Shop getShop(){
+    public Shop getShop() {
         return shop;
     }
 
-    public void clearAllTransactions(){
+    public void clearAllTransactions() {
         transactions.clear();
         Buytransactions.clear();
         Selltransactions.clear();
     }
 
-    public void clearHistory(){ //Everyday
+    public void clearHistory() { //Everyday
         transactions.clear();
         Buytransactions.clear();
         Selltransactions.clear();
@@ -78,21 +108,27 @@ public class History {
         shop.clearTransactions();
     }
 
-    public void saveTransactionToFile(Transaction t){
-        File file = new File(Core.getCore().getDataFolder(),"Transactions/" + shop.getName() + ".yml");
+    public void saveTransactionToFile(Transaction t) {
 
-        if (!file.exists()){
-            if (!file.getParentFile().exists()){
-                file.getParentFile().mkdirs();
-            }
-            try {
-                file.createNewFile();
-            } catch (IOException e) {
-                e.printStackTrace();
+        if (file == null) {
+
+            file = new File(Core.getCore().getDataFolder(), "Transactions/" + shop.getName() + ".yml");
+
+            if (!file.exists()) {
+                if (!file.getParentFile().exists()) {
+                    file.getParentFile().mkdirs();
+                }
+                try {
+                    file.createNewFile();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         }
 
-        YamlConfiguration config = YamlConfiguration.loadConfiguration(file);
+        if (config == null) {
+            config = YamlConfiguration.loadConfiguration(file);
+        }
         int next = config.getKeys(false).size() + 1;
 
         config.createSection("" + next);

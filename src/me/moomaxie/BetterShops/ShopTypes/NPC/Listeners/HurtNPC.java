@@ -1,8 +1,8 @@
-package me.moomaxie.BetterShops.NPC.Listeners;
+package me.moomaxie.BetterShops.ShopTypes.NPC.Listeners;
 
-import me.moomaxie.BetterShops.Configurations.ShopLimits;
-import me.moomaxie.BetterShops.NPC.NPCs;
-import me.moomaxie.BetterShops.NPC.ShopsNPC;
+import me.moomaxie.BetterShops.Configurations.ShopManager;
+import me.moomaxie.BetterShops.ShopTypes.NPC.NPCs;
+import me.moomaxie.BetterShops.ShopTypes.NPC.ShopsNPC;
 import me.moomaxie.BetterShops.Shops.Shop;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -25,23 +25,24 @@ public class HurtNPC implements Listener {
     @EventHandler
     public void onHurt(EntityDamageEvent e) {
 
-        for (ShopsNPC npc : NPCs.getNPCs()) {
-            if (e.getEntity().getType() == npc.getEntity().getType()) {
-                LivingEntity ent = (LivingEntity) e.getEntity();
+        if (e.getEntity() instanceof LivingEntity) {
+            LivingEntity ent = (LivingEntity) e.getEntity();
 
+            if (ent.getCustomName() != null && ent.getCustomName().contains("§a§l")) {
 
-                if (ent.getCustomName() != null) {
-                    if (ent.getCustomName().equals(npc.getEntity().getCustomName())) {
+                Shop shop = ShopManager.fromString(ent.getCustomName().substring(4));
 
-                        if (npc.getShop() != null) {
-                            if (npc.getShop().isNPCShop()) {
-                                e.setCancelled(true);
-                                break;
-                            }
-                        } else {
-                            ent.remove();
-                        }
+                if (shop != null) {
+
+                    if (!shop.isNPCShop() || shop.getNPCShop() == null) {
+                        shop.setNPCShop(true);
+                        ShopsNPC n = new ShopsNPC(ent, shop);
+                        n.removeChest();
+                        n.returnNPC();
+                        NPCs.addNPC(n);
                     }
+                    e.setCancelled(true);
+
                 }
             }
         }
@@ -51,8 +52,8 @@ public class HurtNPC implements Listener {
     public void onDamageByNPC(EntityDamageByEntityEvent e){
         if (e.getEntity() instanceof Player){
             if (e.getDamager() instanceof LivingEntity){
-                if (((LivingEntity) e.getDamager()).getCustomName() != null){
-                    Shop shop = ShopLimits.fromString(((LivingEntity) e.getDamager()).getCustomName().substring(4));
+                if (((LivingEntity) e.getDamager()).getCustomName() != null && ((LivingEntity) e.getDamager()).getCustomName().contains("§a§l")){
+                    Shop shop = ShopManager.fromString(((LivingEntity) e.getDamager()).getCustomName().substring(4));
                     if (shop != null){
                         e.setCancelled(true);
                     }
